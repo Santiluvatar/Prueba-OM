@@ -149,6 +149,8 @@ Final_comedians
 resultado = {str(k): v for k, v in list_by_fecha.items()}
 json_data = json.dumps(resultado, indent=4)
 
+# Inicializar Flask
+app = Flask(__name__)
 
 @app.route("/get_comedians", methods=["GET"])
 def get_comedians():
