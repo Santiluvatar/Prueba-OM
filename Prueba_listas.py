@@ -150,15 +150,15 @@ Final_comedians
 resultado = {str(k): v for k, v in list_by_fecha.items()}
 json_data = json.dumps(resultado, indent=4)
 
-# Inicializar Flask
 app = Flask(__name__)
 
-@app.route("/get_comedians", methods=["GET"])
-def get_comedians():
-    """Endpoint que devuelve los datos en formato JSON."""
-    data = json_data
-    return jsonify(data)
+@app.route("/", methods=["GET"])  # Ruta raíz
+def home():
+    return jsonify({"message": "API funcionando correctamente"})
 
+@app.route("/get_comedians", methods=["GET"])  # Ruta específica
+def get_comedians():
+    return json_data
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 10000)))
+    app.run(host="0.0.0.0", port=5000, debug=True)
