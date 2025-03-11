@@ -146,9 +146,12 @@ print('-----------------')
 Final_comedians
 
 
-# Convertir las claves a string para que sea serializable en JSON
-resultado = {str(k): v for k, v in list_by_fecha.items()}
-json_data = json.dumps(resultado, indent=4)
+resultado = pd.DataFrame.from_dict(list_by_fecha, orient='index').reset_index()
+resultado = resultado.rename(columns={"index":"Fecha"})
+df_melted = resultado.melt(id_vars=['Fecha'], var_name='num', value_name='Comedian')
+# Convertir el DataFrame a JSON
+json_data = df_melted.to_json(orient="records")
+
 
 app = Flask(__name__)
 
