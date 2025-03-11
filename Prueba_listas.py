@@ -146,13 +146,14 @@ Final_comedians
 
 
 # Convertir las claves a string para que sea serializable en JSON
-resultado = {str(k.date()): v for k, v in list_by_fecha.items()}
-#resultado
+resultado = {str(k): v for k, v in list_by_fecha.items()}
+json_data = json.dumps(resultado, indent=4)
+
 
 @app.route("/get_comedians", methods=["GET"])
 def get_comedians():
     """Endpoint que devuelve los datos en formato JSON."""
-    data = resultado
+    data = json_data
     return jsonify(data)
 
 
