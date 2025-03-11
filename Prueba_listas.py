@@ -3,17 +3,25 @@ import random
 from collections import Counter
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
+import os
+import json
 
+# Cargar credenciales desde la variable de entorno
+credentials_json = os.getenv("GOOGLE_CREDENTIALS_JSON")
 
+if not credentials_json:
+    raise ValueError("No se encontró el JSON de credenciales. Asegúrate de configurarlo en las variables de entorno.")
+
+# Convertir la cadena JSON en un diccionario
+credentials_dict = json.loads(credentials_json)
+
+# Usar las credenciales para autenticar Google Sheets API
+creds = service_account.Credentials.from_service_account_info(credentials_dict)
 
 # Carga las credenciales desde el archivo JSON
-SERVICE_ACCOUNT_FILE = "pruebaom-8d17dd95cc2a.json"  # ← Cambia esto por tu archivo JSON
+#SERVICE_ACCOUNT_FILE = "pruebaom-8d17dd95cc2a.json"  # ← Cambia esto por tu archivo JSON
 SCOPES = ["https://www.googleapis.com/auth/spreadsheets.readonly"]
 
-# Autenticación con la API de Google Sheets
-creds = service_account.Credentials.from_service_account_file(
-    SERVICE_ACCOUNT_FILE, scopes=SCOPES
-)
 
 # ID de tu Google Sheets (lo sacas de la URL del documento)
 SPREADSHEET_ID = '1Skn7QQDmyrbPr6YcG1zBI0x0AQyGWTUg_FDGAza_wQc' # ← Cambia esto por el ID real
